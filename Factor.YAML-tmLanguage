@@ -8,6 +8,9 @@ uuid: 99b9cd1a-732f-4f60-a56f-b01cffb562ba
 
 patterns:
 - include: '#comments'
+- include: '#directives'
+- include: '#stack-effects'
+- include: '#expressions'
 
 repository:
 
@@ -15,5 +18,60 @@ repository:
     patterns:
     - name: comment.line
       match: \!.*$
+
+  directives:
+    patterns:
+    - name: keyword.control
+      match: ([A-Z]\S*\:)
+
+  stack-effects:
+    patterns:
+    - name: meta.group
+      begin: (\s+\(\s+)
+      beginCaptures:
+        '0': {name: keyword.operator}
+      end: (\s+\)\s+)
+      endCaptures:
+        '0': {name: keyword.operator}
+      patterns:
+      - include: '#stack-effect-separator'
+      - include: '#parameters'
+
+  parameters:
+    patterns:
+    - name: variable.parameter
+      match: (?<=^|\s)(\S+)(?=$|\s)
+
+  stack-effect-separator:
+    patterns:
+    - name: keyword.operator
+      match: (--)
+
+  expressions:
+    patterns:
+    - include: '#literals'
+    - include: '#strings'
+    - include: '#special'
+
+  literals:
+    patterns:
+    - name: constant.numeric
+      match: (?<=^|\s)[+-]*\d+\.?\d*(?=$|\s)
+    - name: constant.language
+      match: (?<=^|\s)(t|f)(?=$|\s)
+
+  strings:
+    patterns:
+    - name: string.quoted.double
+      begin: '"'
+      end: '"'
+      patterns:
+      - match: (\\\\|\\n|\\r|\\t|\\"|\\')
+        name: constant.character.escape
+
+  special:
+    patterns:
+    - name: keyword.operator
+      match: (?<=^|\s)(\[|\]|:|::|;|\(|\)|--|{|})(?=$|\s)
 
 ...
