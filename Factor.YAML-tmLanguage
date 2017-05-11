@@ -9,6 +9,7 @@ uuid: 99b9cd1a-732f-4f60-a56f-b01cffb562ba
 patterns:
 - include: '#comments'
 - include: '#directives'
+- include: '#includes'
 - include: '#definitions'
 - include: '#stack-effects'
 - include: '#expressions'
@@ -24,6 +25,11 @@ repository:
     patterns:
     - name: keyword.control
       match: ([A-Z]\S*\:)
+
+  includes:
+    patterns:
+    - name: variable.language
+      match: (?<=(USE:\s))(\S+)(\s\S+)*(?=$|\s)
 
   definitions:
     patterns:
@@ -79,5 +85,7 @@ repository:
     patterns:
     - name: keyword.operator
       match: (?<=^|\s)(\[|\]|:|::|;|\(|\)|--|{|})(?=$|\s)
+    - name: entity.name.tag
+      match: (?<=^|\s)(recursive|inline)(?=$|\s)
 
 ...
