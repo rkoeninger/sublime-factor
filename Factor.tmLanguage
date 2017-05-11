@@ -97,7 +97,31 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=(USE:\s))(\S+)(\s\S+)*(?=$|\s)</string>
+					<string>(?&lt;=(USING:\s))(\S+)(\s\S+)*(?=$|\s)</string>
+					<key>name</key>
+					<string>variable.language</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=(USE:\s))(\S+)(\s\S+)+(?=$|\s)</string>
+					<key>name</key>
+					<string>invalid.illegal</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=(MAIN:\s))(\S+)(\s\S+)+(?=$|\s)</string>
+					<key>name</key>
+					<string>invalid.illegal</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=(IN:\s))(\S+)(\s\S+)+(?=$|\s)</string>
+					<key>name</key>
+					<string>invalid.illegal</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=(USE:\s))(\S+)(?=$|\s)</string>
 					<key>name</key>
 					<string>variable.language</string>
 				</dict>

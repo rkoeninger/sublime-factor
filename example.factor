@@ -1,6 +1,9 @@
 ! single line comment
 
-USE: present locals
+USE: singlegood
+USE: mulitiple bad
+USING: present locals
+IN: here
 
 :: forever ( x -- ? )
     dup 2 + / dup zero?

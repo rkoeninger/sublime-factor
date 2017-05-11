@@ -29,7 +29,15 @@ repository:
   includes:
     patterns:
     - name: variable.language
-      match: (?<=(USE:\s))(\S+)(\s\S+)*(?=$|\s)
+      match: (?<=(USING:\s))(\S+)(\s\S+)*(?=$|\s)
+    - name: invalid.illegal
+      match: (?<=(USE:\s))(\S+)(\s\S+)+(?=$|\s)
+    - name: invalid.illegal
+      match: (?<=(MAIN:\s))(\S+)(\s\S+)+(?=$|\s)
+    - name: invalid.illegal
+      match: (?<=(IN:\s))(\S+)(\s\S+)+(?=$|\s)
+    - name: variable.language
+      match: (?<=(USE:\s))(\S+)(?=$|\s)
 
   definitions:
     patterns:
