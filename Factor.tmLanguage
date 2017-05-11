@@ -163,9 +163,15 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=^|\s)(\[|\]|:|::|;|\(|\)|--|{|})(?=$|\s)</string>
+					<string>(?&lt;=^|\s)(\[|\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)</string>
 					<key>name</key>
 					<string>keyword.operator</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=^|\s)(if|call|drop|dropd|drop2|dup|dupd|dup2|dup3|swap|swapd|swap2|rot|-rot)(?=$|\s)</string>
+					<key>name</key>
+					<string>keyword.control</string>
 				</dict>
 				<dict>
 					<key>match</key>

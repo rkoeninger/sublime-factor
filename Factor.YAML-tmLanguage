@@ -92,7 +92,9 @@ repository:
   special:
     patterns:
     - name: keyword.operator
-      match: (?<=^|\s)(\[|\]|:|::|;|\(|\)|--|{|})(?=$|\s)
+      match: (?<=^|\s)(\[|\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)
+    - name: keyword.control
+      match: (?<=^|\s)(if|call|drop|dropd|drop2|dup|dupd|dup2|dup3|swap|swapd|swap2|rot|-rot)(?=$|\s)
     - name: entity.name.tag
       match: (?<=^|\s)(recursive|inline)(?=$|\s)
 

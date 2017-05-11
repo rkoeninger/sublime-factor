@@ -9,7 +9,7 @@ IN: here
     dup 2 + / dup zero?
     [ drop "yes" ]
     [ forever ]
-    if
+    if ! end of line comment
     ; recursive
 
 : thing ( x -- y ) dup t [ * ] [ + ] if ;
