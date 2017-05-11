@@ -9,6 +9,7 @@ uuid: 99b9cd1a-732f-4f60-a56f-b01cffb562ba
 patterns:
 - include: '#comments'
 - include: '#directives'
+- include: '#definitions'
 - include: '#stack-effects'
 - include: '#expressions'
 
@@ -23,6 +24,11 @@ repository:
     patterns:
     - name: keyword.control
       match: ([A-Z]\S*\:)
+
+  definitions:
+    patterns:
+    - name: variable.function
+      match: (?<=(:\s))(\S+)(?=$|\s)
 
   stack-effects:
     patterns:

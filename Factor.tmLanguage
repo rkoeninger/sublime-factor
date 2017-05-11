@@ -20,6 +20,10 @@
 		</dict>
 		<dict>
 			<key>include</key>
+			<string>#definitions</string>
+		</dict>
+		<dict>
+			<key>include</key>
 			<string>#stack-effects</string>
 		</dict>
 		<dict>
@@ -38,6 +42,18 @@
 					<string>\!.*$</string>
 					<key>name</key>
 					<string>comment.line</string>
+				</dict>
+			</array>
+		</dict>
+		<key>definitions</key>
+		<dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>match</key>
+					<string>(?&lt;=(:\s))(\S+)(?=$|\s)</string>
+					<key>name</key>
+					<string>variable.function</string>
 				</dict>
 			</array>
 		</dict>
