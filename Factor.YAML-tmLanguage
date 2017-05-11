@@ -1,0 +1,19 @@
+# [PackageDev] target_format: plist, ext: tmLanguage
+---
+
+name: Factor
+scopeName: source.factor
+fileTypes: [factor]
+uuid: 99b9cd1a-732f-4f60-a56f-b01cffb562ba
+
+patterns:
+- include: '#comments'
+
+repository:
+
+  comments:
+    patterns:
+    - name: comment.line
+      match: \!.*$
+
+...
