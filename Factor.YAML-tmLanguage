@@ -9,7 +9,7 @@ uuid: 99b9cd1a-732f-4f60-a56f-b01cffb562ba
 patterns:
 - include: '#comments'
 - include: '#directives'
-- include: '#includes'
+- include: '#directive-arguments'
 - include: '#definitions'
 - include: '#stack-effects'
 - include: '#expressions'
@@ -26,22 +26,26 @@ repository:
     - name: keyword.control
       match: ([A-Z]\S*\:)
 
-  includes:
+  directive-arguments:
     patterns:
-    - name: variable.language
-      match: (?<=(USING:\s))(\S+)(\s\S+)*(?=$|\s)
     - name: invalid.illegal
       match: (?<=(USE:\s))(\S+)(\s\S+)+(?=$|\s)
     - name: invalid.illegal
       match: (?<=(MAIN:\s))(\S+)(\s\S+)+(?=$|\s)
     - name: invalid.illegal
       match: (?<=(IN:\s))(\S+)(\s\S+)+(?=$|\s)
-    - name: variable.language
+    - name: entity.name.section
       match: (?<=(USE:\s))(\S+)(?=$|\s)
+    - name: entity.name.function
+      match: (?<=(MAIN:\s))(\S+)(?=$|\s)
+    - name: entity.name.section
+      match: (?<=(IN:\s))(\S+)(?=$|\s)
+    - name: entity.name.section
+      match: (?<=(USING:\s))(\S+)(\s\S+)*(?=$|\s)
 
   definitions:
     patterns:
-    - name: variable.function
+    - name: entity.name.function
       match: (?<=(:\s))(\S+)(?=$|\s)
 
   stack-effects:
