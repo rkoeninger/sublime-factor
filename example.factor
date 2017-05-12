@@ -15,7 +15,7 @@ IN: here
 : thing ( x -- y ) dup t [ * ] [ + ] if ;
 
 : run ( -- )
-    5 thing
+    { 5 } last thing
     present print ;
 
 MAIN: thing
