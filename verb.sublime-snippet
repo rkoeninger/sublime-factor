@@ -1,0 +1,6 @@
+<snippet>
+	<description>Verb Definition</description>
+	<content><![CDATA[: verb ( … -- … ) ;]]></content>
+	<tabTrigger>verb</tabTrigger>
+	<scope>source.factor</scope>
+</snippet>
