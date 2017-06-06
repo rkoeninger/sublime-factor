@@ -9,7 +9,7 @@
 
 ## Automatic Installation
 
-**[PENDING PR ACCEPTANCE](https://github.com/wbond/package_control_channel/pull/6298)** Sublime/Factor is available from [Package Control](https://packagecontrol.io/) under the name `Factor`.
+Sublime/Factor is available from [Package Control](https://packagecontrol.io/packages/Factor) under the name `Factor`.
 
 ## Manual Installation
 
