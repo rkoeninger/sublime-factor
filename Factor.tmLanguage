@@ -175,7 +175,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=^|\s)(\[|\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)</string>
+					<string>(?&lt;=^|\s)(\[|\[\||\||\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)</string>
 					<key>name</key>
 					<string>keyword.operator</string>
 				</dict>
