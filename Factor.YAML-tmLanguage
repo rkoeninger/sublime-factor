@@ -40,6 +40,10 @@ repository:
       match: (?<=(MAIN:\s))(\S+)(?=$|\s)
     - name: entity.name.section
       match: (?<=(IN:\s))(\S+)(?=$|\s)
+    - name: entity.name.type
+      match: (?<=(TUPLE:\s))(\S+)(\s\S+)*(?=$|\s)
+    - name: entity.name.type
+      match: (?<=(SYNTAX:\s))(\S+)(\s\S+)*(?=$|\s)
     - name: entity.name.section
       match: (?<=(USING:\s))(\S+)(\s\S+)*(?=$|\s)
 
@@ -96,9 +100,9 @@ repository:
   special:
     patterns:
     - name: keyword.operator
-      match: (?<=^|\s)(\[|\[\||\||\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)
+      match: (?<=^|\s)(\[|\[\||\[let|\||\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)
     - name: keyword.control
-      match: (?<=^|\s)(if|call|drop|dropd|drop2|dup|dupd|dup2|dup3|swap|swapd|swap2|rot|-rot)(?=$|\s)
+      match: (?<=^|\s)(if|when|while|call|drop|dropd|2drop|3drop|4drop|dup|dupd|2dup|3dup|4dup|dip|2dip|3dip|4dip|keep|2keep|3keep|4keep|swap|swapd|rot|-rot)(?=$|\s)
     - name: entity.name.tag
       match: (?<=^|\s)(recursive|inline)(?=$|\s)
 
