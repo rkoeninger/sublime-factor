@@ -103,19 +103,19 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=(TUPLE:\s))(\S+)(\s\S+)*(?=$|\s)</string>
+					<string>(?&lt;=(TUPLE:\s))(\S+)(\s[^\s;]+)*(?=$|\s)</string>
 					<key>name</key>
 					<string>entity.name.type</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=(SYNTAX:\s))(\S+)(\s\S+)*(?=$|\s)</string>
+					<string>(?&lt;=(SYNTAX:\s))(\S+)(\s[^\s;]+)*(?=$|\s)</string>
 					<key>name</key>
 					<string>entity.name.type</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=(USING:\s))(\S+)(\s\S+)*(?=$|\s)</string>
+					<string>(?&lt;=(USING:\s))(\S+)(\s[^\s;]+)*(?=$|\s)</string>
 					<key>name</key>
 					<string>entity.name.section</string>
 				</dict>

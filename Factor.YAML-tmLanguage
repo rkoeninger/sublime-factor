@@ -41,11 +41,11 @@ repository:
     - name: entity.name.section
       match: (?<=(IN:\s))(\S+)(?=$|\s)
     - name: entity.name.type
-      match: (?<=(TUPLE:\s))(\S+)(\s\S+)*(?=$|\s)
+      match: (?<=(TUPLE:\s))(\S+)(\s[^\s;]+)*(?=$|\s)
     - name: entity.name.type
-      match: (?<=(SYNTAX:\s))(\S+)(\s\S+)*(?=$|\s)
+      match: (?<=(SYNTAX:\s))(\S+)(\s[^\s;]+)*(?=$|\s)
     - name: entity.name.section
-      match: (?<=(USING:\s))(\S+)(\s\S+)*(?=$|\s)
+      match: (?<=(USING:\s))(\S+)(\s[^\s;]+)*(?=$|\s)
 
   definitions:
     patterns:
