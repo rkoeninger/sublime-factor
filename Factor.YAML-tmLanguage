@@ -91,7 +91,7 @@ repository:
   strings:
     patterns:
     - name: string.quoted.double
-      begin: '"'
+      begin: ("|SBUF"|P")
       end: '"'
       patterns:
       - match: (\\\\|\\n|\\r|\\t|\\"|\\')
@@ -100,7 +100,7 @@ repository:
   special:
     patterns:
     - name: keyword.operator
-      match: (?<=^|\s)(\[|\[\||\'\[|\[let|\||\]|:|::|;|\(|\)|--|{|}|\+|-|\*|/)(?=$|\s)
+      match: (?<=^|\s)(\[|\[\||\'\[|\[let|\||\]|:|::|;|\(|\)|--|{|V{|T{|B{|H{|HS{|C{|}|\+|-|\*|/)(?=$|\s)
     - name: keyword.control
       match: (?<=^|\s)(if|when|while|call|drop|dropd|2drop|3drop|4drop|dup|dupd|2dup|3dup|4dup|dip|2dip|3dip|4dip|keep|2keep|3keep|4keep|swap|swapd|rot|-rot)(?=$|\s)
     - name: entity.name.tag

@@ -7,7 +7,7 @@ IN: here
 
 :: forever ( x -- ? )
     dup 2 + / dup zero?
-    [ drop "yes" ]
+    [ V{ 1 2 3 } 2drop P"/path/to/file" ]
     [ forever ]
     if ! end of line comment
     ; recursive
