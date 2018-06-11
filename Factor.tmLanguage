@@ -187,7 +187,7 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?&lt;=^|\s)(\[|\[\||\'\[|\[let|\||\]|:|::|;|\(|\)|--|{|V{|W{|T{|B{|H{|HS{|C{|}|\+|-|\*|/)(?=$|\s)</string>
+					<string>(?&lt;=^|\s)(\[|\[\||\'\[|\[let|\||\]|:|::|;|\(|\)|--|{|V{|W{|T{|B{|H{|HS{|C{|execute(|call(|}|\+|-|\*|/)(?=$|\s)</string>
 					<key>name</key>
 					<string>keyword.operator</string>
 				</dict>
