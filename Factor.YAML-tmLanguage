@@ -19,7 +19,7 @@ repository:
   comments:
     patterns:
     - name: comment.line
-      match: (^|\s)\!.*$
+      match: (^|\s)\!\s.*$
 
   directives:
     patterns:
