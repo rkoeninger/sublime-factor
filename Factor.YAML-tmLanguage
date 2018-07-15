@@ -100,7 +100,7 @@ repository:
   special:
     patterns:
     - name: keyword.operator
-      match: (?<=^|\s)(\[|\[\||\'\[|\[let|$\[|\||\]|:|::|;|\(|\)|--|{|V{|W{|T{|B{|H{|HS{|CS{|C{|S{|L{|DL{|execute\(|call\(|eval\(|}|\+|-|\*|/)(?=$|\s)
+      match: (?<=^|\s)(<<|>>|<PRIVATE|PRIVATE>|\[|\[\||\'\[|\[let|$\[|\||\]|:|::|;|\(|\)|--|{|V{|W{|T{|B{|H{|HS{|CS{|C{|S{|L{|DL{|execute\(|call\(|eval\(|}|\+|-|\*|/|<|>|<=|>=|=)(?=$|\s)
     - name: keyword.control
       match: (?<=^|\s)(if|when|while|call|drop|dropd|2drop|3drop|4drop|dup|dupd|2dup|3dup|4dup|dip|2dip|3dip|4dip|keep|2keep|3keep|4keep|swap|swapd|rot|-rot)(?=$|\s)
     - name: entity.name.tag
