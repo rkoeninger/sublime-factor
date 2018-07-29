@@ -91,7 +91,7 @@ repository:
   strings:
     patterns:
     - name: string.quoted.double
-      begin: ("|SBUF"|P"|DLL")
+      begin: ("|SBUF"|P"|DLL"|URL")
       end: '"'
       patterns:
       - match: (\\\\|\\n|\\r|\\t|\\"|\\')
