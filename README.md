@@ -7,17 +7,9 @@
   * Syntax Highlighting - detects files matching the pattern `*.factor`.
   * Comments - Applies Factor-style single line (`!`) comments using standard commands/shortcuts.
 
-## Automatic Installation
+## Installation
 
 Sublime/Factor is available from [Package Control](https://packagecontrol.io/packages/Factor) under the name `Factor`.
-
-## Manual Installation
-
-Download this repo as an archive or `git clone` it under the `Packages` directory under your Sublime user path.
-
-On Windows, this is something like `C:\Users\%USER_NAME%\AppData\Roaming\Sublime Text 3\Packages`.
-
-Once the `sublime-factor` package is in place, just restart Sublime, and it should be ready to go.
 
 ## Future Work
 
