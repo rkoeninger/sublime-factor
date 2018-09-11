@@ -3,146 +3,221 @@
 name: Factor
 file_extensions: [factor]
 scope: source.factor
+variables:
+  space_before: (?<!\S)
+  space_after: (?!\S)
+  eol_or_eof: ($\n?)
+  semicolon: ({{space_before}};{{space_after}})
+  double_dash: ({{space_before}}\-\-{{space_after}})
+  left_paren: ({{space_before}}\({{space_after}})
+  right_paren: ({{space_before}}\){{space_after}})
+  identifier: ({{space_before}}\S+{{space_after}})
+  debris: (\S+)
 contexts:
   main:
-
-    # Line Comment
-    - match: (!\s)
+    - include: comments
+    - include: directives
+    - include: declarations
+  comments:
+    - match: ({{space_before}}!{{space_after}})
       scope: punctuation.definition.comment.factor
       push: line_comment
-
-    # USE Directive
-    - match: (\bUSE:\b)
-      scope: keyword.control.factor
-      push: use_directive
-
-    # USING Directive
-    - match: (\bUSING:\b)
-      scope: keyword.control.factor
-      push: using_directive
-
-    # MAIN Directive
-    - match: (\bMAIN:\b)
-      scope: keyword.control.factor
-      push: main_directive
-
-    # IN Directive
-    - match: (\bIN:\b)
-      scope: keyword.control.factor
-      push: in_directive
-
-    # TODO: `TUPLE:`
-    # TODO: `SYNTAX:`
-
-    # Other Directives
-    - match: ([A-Z]\S*\:)
-      scope: keyword.control.factor
-      push: other_directive
-
-    # Verb Declaration
-    - match: (\b(\:|\:\:)\b)
-      scope: keyword.control.factor
-      push: verb_declaration
-
-    # Verb Modifiers
-    - match: (\b(recursive|inline)\b)
-      name: entity.name.tag
-
-    # TODO: limit expressions (string, number, lang constants, keywords, but not recursive/inline)
-    #       to inside of verb definitions and certain directives?
-
-    # Double-quoted String
-    - match: ("|SBUF"|P"|DLL"|URL")
-      scope: punctuation.definition.string.begin.factor
-      push: double_quoted_string
-
-    # Keywords
-    - match: (\b(<<|>>|<PRIVATE|PRIVATE>|\[|\[\||\'\[|\[let|\$\[|\||\]|:|::|;|\(|\)|--|{|V{|W{|T{|B{|H{|HS{|CS{|C{|S{|L{|DL{|execute\(|call\(|eval\(|}|\+|-|\*|/|<|>|<=|>=|=)\b)
-      name: keyword.operator
-    - match: (\b(if|when|while|call|drop|dropd|2drop|3drop|4drop|dup|dupd|2dup|3dup|4dup|dip|2dip|3dip|4dip|keep|2keep|3keep|4keep|swap|swapd|rot|-rot)\b)
-      name: keyword.control
-
-    # Language Constants
-    - match: (\b(t|f)\b)
-      scope: keyword.constant.factor
-
-    # Numbers
-    - match: (\b[+-]?\d+(\.\d+)?\b)
-      scope: constant.numeric.factor
-
   line_comment:
     - meta_scope: comment.line.factor
-    - match: ($\n?)
+    - match: ({{eol_or_eof}})
       pop: true
-
-  use_directive:
-    - meta_scope: meta.use_directive.factor
-    - match: (?<=(USE:\s))(\S+)
-      scope: entity.name.section
-    - match: (\S+)
-      scope: invalid.illegal
-    - match: ($\n?)
-      pop: true
-
-  using_directive:
-    - meta_scope: meta.using_directive.factor
-    - match: (\S+)
-      scope: entity.name.section
-    - match: ($\n?)
-      pop: true
-
-  main_directive:
-    - meta_scope: meta.main_directive.factor
-    - match: (?<=(MAIN:\s))(\S+)
-      scope: entity.name.function
-    - match: (\S+)
-      scope: invalid.illegal
-    - match: ($\n?)
-      pop: true
-
-  in_directive:
-    - meta_scope: meta.in_directive.factor
-    - match: (?<=(IN:\s))(\S+)
-      scope: entity.name.section
-    - match: (\S+)
-      scope: invalid.illegal
-    - match: ($\n?)
-      pop: true
-
-  other_directive:
-    - meta_scope: meta.other_directive.factor
-    - match: ($\n?)
-      pop: true
-
-  verb_declaration:
-    - meta_scope: meta.verb_declaration.factor
-    - match: (\b\S+\b)
-      scope: entity.name.function
-    - match: (\b\(\b)
-      scope: keyword.operator
-      push: stack_effect
-    - match: (\b;\b)
-      scope: keyword.operator
-      pop: true
-
-  stack_effect:
-    - meta_scope: meta.stack_effect.factor
-    - match: (\b\-\-\b)
-      scope: keyword.operator
-    - match: (\b\S+\b)
-      scope: variable.parameter
-    - match: (\b\(\b)
-      scope: keyword.operator
-      push: stack_effect
-    - match: (\b\)\b)
-      pop: true
-
+  expressions:
+    - match: ({{space_before}}(|P|SBUF|DLL|URL)")
+      scope: punctuation.definition.string.begin.factor
+      push: double_quoted_string
+    # TODO: remove operators from Keywords as we won't be able to list them all
+    #       come up with more general identification like sequences of non-ws, non-alphanum are operators
+    - match: ({{space_before}}(<<|>>|<PRIVATE|PRIVATE>|\[|\[\||\'\[|\[let|\$\[|\||\]|{|V{|W{|T{|B{|H{|HS{|CS{|C{|S{|L{|DL{|execute\(|call\(|eval\(|}|\+|-|\*|/|<|>|<=|>=|=){{space_after}})
+      scope: keyword.operator.factor
+    - match: ({{space_before}}(if|when|while|call|drop|dropd|2drop|3drop|4drop|dup|dupd|2dup|3dup|4dup|dip|2dip|3dip|4dip|keep|2keep|3keep|4keep|swap|swapd|rot|-rot){{space_after}})
+      scope: keyword.control.factor
+    - match: ({{space_before}}(t|f){{space_after}})
+      scope: constant.language.factor
+    - match: ({{space_before}}[+-]?\d+(\.\d+)?{{space_after}})
+      scope: constant.numeric.factor
   double_quoted_string:
     - meta_scope: string.quoted.double.factor
-    - match: (\\\\|\\n|\\r|\\t|\\"|\\')
+    - match: (\\(\\|s|t|n|r|b|v|f|0|e|"|\d{3}|u\d{6}|u{\w+}))
       scope: constant.character.escape.factor
     - match: (\\.)
-      scope: invalid.illegal
+      scope: invalid.illegal.factor
     - match: (")
       scope: punctuation.definition.string.end.factor
       pop: true
+  directives:
+    - match: ({{space_before}}USE:{{space_after}})
+      scope: keyword.control.factor
+      push: use_directive
+    - match: ({{space_before}}USING:{{space_after}})
+      scope: keyword.control.factor
+      push: using_directive
+    - match: ({{space_before}}MAIN:{{space_after}})
+      scope: keyword.control.factor
+      push: main_directive
+    - match: ({{space_before}}IN:{{space_after}})
+      scope: keyword.control.factor
+      push: in_directive
+    - match: ({{space_before}}TUPLE:{{space_after}})
+      scope: keyword.control.factor
+      push: tuple_directive
+    - match: ({{space_before}}GENERIC:{{space_after}})
+      scope: keyword.control.factor
+      push: generic_directive
+    - match: ({{space_before}}M:{{space_after}})
+      scope: keyword.control.factor
+      push: method_directive
+    - match: ({{space_before}}[A-Z]\S*:{{space_after}})
+      scope: keyword.control.factor
+      push: other_directive
+  use_directive:
+    - meta_scope: meta.use_directive.factor
+    - match: ({{eol_or_eof}})
+      pop: true
+    - match: ((?<=(USE:\s)){{identifier}})
+      scope: entity.name.section.factor
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  using_directive:
+    - meta_scope: meta.using_directive.factor
+    - match: ({{semicolon}})
+      scope: keyword.operator.factor
+      pop: true
+    - match: ({{identifier}})
+      scope: entity.name.section.factor
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  main_directive:
+    - meta_scope: meta.main_directive.factor
+    - match: ({{eol_or_eof}})
+      pop: true
+    - match: ((?<=(MAIN:\s)){{identifier}})
+      scope: entity.name.function.factor
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  in_directive:
+    - meta_scope: meta.in_directive.factor
+    - match: ({{eol_or_eof}})
+      pop: true
+    - match: ((?<=(IN:\s)){{identifier}})
+      scope: entity.name.section.factor
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  tuple_directive:
+    - meta_scope: meta.tuple_directive.factor
+    - match: ({{semicolon}})
+      scope: keyword.control.factor
+      pop: true
+    - match: (<)
+      scope: keyword.control.factor
+      set: tuple_directive_superclass
+    - match: ((?<=(TUPLE:\s)){{identifier}})
+      scope: entity.type.factor
+    - match: ({{space_before}}\S+)
+      scope: variable.parameter.factor
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  tuple_directive_superclass:
+    - meta_scope: meta.tuple_directive.superclass.factor
+    - match: ({{semicolon}})
+      scope: keyword.control.factor
+      pop: true
+    - match: ((?<=(<\s)){{identifier}})
+      scope: entity.type.factor
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  generic_directive:
+    - meta_scope: meta.generic_directive.factor
+    - match: ({{identifier}})
+      scope: entity.name.function.factor
+      set: generic_directive_pre_stack_effect
+  generic_directive_pre_stack_effect:
+    - meta_scope: meta.generic_directive.pre_stack_effect.factor
+    - match: ({{left_paren}})
+      scope: keyword.control.factor
+      set: generic_directive_stack_effect
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  generic_directive_stack_effect:
+    - meta_scope: meta.generic_directive.stack_effect.factor
+    - match: ({{right_paren}})
+      scope: keyword.control.factor
+      pop: true
+    - match: ({{left_paren}})
+      scope: keyword.control.factor
+      push: generic_directive_stack_effect
+    - match: ({{double_dash}})
+      scope: keyword.control.factor
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+  method_directive:
+    - meta_scope: meta.method_directive.factor
+    - match: ({{identifier}})
+      scope: entity.type.factor
+      set: method_directive_function_name
+  method_directive_function_name:
+    - meta_scope: meta.method_directive.function_name.factor
+    - match: ({{identifier}})
+      scope: entity.name.function.factor
+      set: method_directive_body
+  method_directive_body:
+    - meta_scope: meta.method_directive.body.factor
+    - match: ({{semicolon}})
+      scope: keyword.control.factor
+      pop: true
+    - include: expressions
+  other_directive:
+    - meta_scope: meta.other_directive.factor
+    - match: ({{eol_or_eof}})
+      pop: true
+  declarations:
+    - match: ({{space_before}}(::|:){{space_after}})
+      scope: keyword.control.factor
+      push: verb_declaration
+    # TODO: how to check that these only apply
+    #       after verb declaration ending ';' ?
+    #       after semicolon, go to post-decl meta
+    #       match on recursive, inline and pop
+    #       when matching non-capturing regex for anything
+    - match: (recursive|inline)
+      scope: entity.name.tag.factor
+  verb_declaration:
+    - meta_scope: meta.verb_declaration.factor
+    - match: ({{identifier}})
+      scope: entity.name.function.factor
+      set: pre_stack_effect
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  pre_stack_effect:
+    - meta_scope: meta.verb_declaration.pre_stack_effect.factor
+    - match: ({{left_paren}})
+      scope: keyword.control.factor
+      set: stack_effect
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  stack_effect:
+    - meta_scope: meta.verb_declaration.stack_effect.factor
+    - match: ({{right_paren}})
+      scope: keyword.control.factor
+      set: verb_body
+      # TODO: above needs to pop instead of set to do nested stack effects
+    - match: ({{left_paren}})
+      scope: keyword.control.factor
+      push: stack_effect
+    - match: ({{double_dash}})
+      scope: keyword.control.factor
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+  verb_body:
+    - meta_scope: meta.verb_declaration.body.factor
+    - include: comments
+    - match: ({{semicolon}})
+      scope: keyword.control.factor
+      pop: true
+    - include: expressions
