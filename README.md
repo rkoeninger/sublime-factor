@@ -20,4 +20,4 @@ Sublime/Factor is available from [Package Control](https://packagecontrol.io/pac
 
 ## Contributing
 
-Use [PackageDev](https://packagecontrol.io/packages/PackageDev) for Sublime to edit syntax definitions. Make changes to `Factor.YAML-tmLanguage` and then re-generate `Factor.tmLangauge` by hitting <kbd>F7</kbd>. Edits made directly to `Factor.tmLanguage` will get overwritten.
+Pull requests welcome. The latest version of Sublime should have everything you need to develop and test enhancements to this package.

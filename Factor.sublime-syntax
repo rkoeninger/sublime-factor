@@ -1,0 +1,148 @@
+%YAML 1.2
+---
+name: Factor
+file_extensions: [factor]
+scope: source.factor
+contexts:
+  main:
+
+    # Line Comment
+    - match: (!\s)
+      scope: punctuation.definition.comment.factor
+      push: line_comment
+
+    # USE Directive
+    - match: (\bUSE:\b)
+      scope: keyword.control.factor
+      push: use_directive
+
+    # USING Directive
+    - match: (\bUSING:\b)
+      scope: keyword.control.factor
+      push: using_directive
+
+    # MAIN Directive
+    - match: (\bMAIN:\b)
+      scope: keyword.control.factor
+      push: main_directive
+
+    # IN Directive
+    - match: (\bIN:\b)
+      scope: keyword.control.factor
+      push: in_directive
+
+    # TODO: `TUPLE:`
+    # TODO: `SYNTAX:`
+
+    # Other Directives
+    - match: ([A-Z]\S*\:)
+      scope: keyword.control.factor
+      push: other_directive
+
+    # Verb Declaration
+    - match: (\b(\:|\:\:)\b)
+      scope: keyword.control.factor
+      push: verb_declaration
+
+    # Verb Modifiers
+    - match: (\b(recursive|inline)\b)
+      name: entity.name.tag
+
+    # TODO: limit expressions (string, number, lang constants, keywords, but not recursive/inline)
+    #       to inside of verb definitions and certain directives?
+
+    # Double-quoted String
+    - match: ("|SBUF"|P"|DLL"|URL")
+      scope: punctuation.definition.string.begin.factor
+      push: double_quoted_string
+
+    # Keywords
+    - match: (\b(<<|>>|<PRIVATE|PRIVATE>|\[|\[\||\'\[|\[let|\$\[|\||\]|:|::|;|\(|\)|--|{|V{|W{|T{|B{|H{|HS{|CS{|C{|S{|L{|DL{|execute\(|call\(|eval\(|}|\+|-|\*|/|<|>|<=|>=|=)\b)
+      name: keyword.operator
+    - match: (\b(if|when|while|call|drop|dropd|2drop|3drop|4drop|dup|dupd|2dup|3dup|4dup|dip|2dip|3dip|4dip|keep|2keep|3keep|4keep|swap|swapd|rot|-rot)\b)
+      name: keyword.control
+
+    # Language Constants
+    - match: (\b(t|f)\b)
+      scope: keyword.constant.factor
+
+    # Numbers
+    - match: (\b[+-]?\d+(\.\d+)?\b)
+      scope: constant.numeric.factor
+
+  line_comment:
+    - meta_scope: comment.line.factor
+    - match: ($\n?)
+      pop: true
+
+  use_directive:
+    - meta_scope: meta.use_directive.factor
+    - match: (?<=(USE:\s))(\S+)
+      scope: entity.name.section
+    - match: (\S+)
+      scope: invalid.illegal
+    - match: ($\n?)
+      pop: true
+
+  using_directive:
+    - meta_scope: meta.using_directive.factor
+    - match: (\S+)
+      scope: entity.name.section
+    - match: ($\n?)
+      pop: true
+
+  main_directive:
+    - meta_scope: meta.main_directive.factor
+    - match: (?<=(MAIN:\s))(\S+)
+      scope: entity.name.function
+    - match: (\S+)
+      scope: invalid.illegal
+    - match: ($\n?)
+      pop: true
+
+  in_directive:
+    - meta_scope: meta.in_directive.factor
+    - match: (?<=(IN:\s))(\S+)
+      scope: entity.name.section
+    - match: (\S+)
+      scope: invalid.illegal
+    - match: ($\n?)
+      pop: true
+
+  other_directive:
+    - meta_scope: meta.other_directive.factor
+    - match: ($\n?)
+      pop: true
+
+  verb_declaration:
+    - meta_scope: meta.verb_declaration.factor
+    - match: (\b\S+\b)
+      scope: entity.name.function
+    - match: (\b\(\b)
+      scope: keyword.operator
+      push: stack_effect
+    - match: (\b;\b)
+      scope: keyword.operator
+      pop: true
+
+  stack_effect:
+    - meta_scope: meta.stack_effect.factor
+    - match: (\b\-\-\b)
+      scope: keyword.operator
+    - match: (\b\S+\b)
+      scope: variable.parameter
+    - match: (\b\(\b)
+      scope: keyword.operator
+      push: stack_effect
+    - match: (\b\)\b)
+      pop: true
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.factor
+    - match: (\\\\|\\n|\\r|\\t|\\"|\\')
+      scope: constant.character.escape.factor
+    - match: (\\.)
+      scope: invalid.illegal
+    - match: (")
+      scope: punctuation.definition.string.end.factor
+      pop: true
