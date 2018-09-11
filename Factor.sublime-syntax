@@ -34,9 +34,6 @@ contexts:
       scope: keyword.control.factor
     - match: ({{space_before}}[^a-zA-Z0-9;]+{{space_after}})
       scope: keyword.operator.factor
-
-    # - match: ({{space_before}}(<<|>>|<PRIVATE|PRIVATE>|\[|\[\||\'\[|\[let|\$\[|\||\]|{|V{|W{|T{|B{|H{|HS{|CS{|C{|S{|L{|DL{|execute\(|call\(|eval\(|}|\+|-|\*|/|<|>|<=|>=|=){{space_after}})
-    #   scope: keyword.operator.factor
     - match: ({{space_before}}(t|f){{space_after}})
       scope: constant.language.factor
     - match: ({{space_before}}[+-]?\d+(\.\d+)?{{space_after}})
