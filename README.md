@@ -7,6 +7,10 @@
   * Syntax Highlighting - detects files matching the pattern `*.factor`.
   * Comments - Applies Factor-style single line (`!`) comments using standard commands/shortcuts.
 
+## Preview
+
+![Screenshot](https://raw.githubusercontent.com/rkoeninger/sublime-factor/master/screenshot.png)
+
 ## Installation
 
 Sublime/Factor is available from [Package Control](https://packagecontrol.io/packages/Factor) under the name `Factor`.
