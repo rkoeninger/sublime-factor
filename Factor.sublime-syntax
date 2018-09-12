@@ -76,6 +76,7 @@ contexts:
       push: other_directive
   use_directive:
     - meta_scope: meta.use_directive.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.namespace.factor
       pop: true
@@ -83,6 +84,7 @@ contexts:
       scope: invalid.illegal.factor
   using_directive:
     - meta_scope: meta.using_directive.factor
+    - include: comments
     - match: ({{semicolon}})
       scope: punctuation.terminator.factor
       pop: true
@@ -92,6 +94,7 @@ contexts:
       scope: invalid.illegal.factor
   main_directive:
     - meta_scope: meta.main_directive.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.function.factor
       pop: true
@@ -99,6 +102,7 @@ contexts:
       scope: invalid.illegal.factor
   in_directive:
     - meta_scope: meta.in_directive.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.namespace.factor
       pop: true
@@ -106,6 +110,7 @@ contexts:
       scope: invalid.illegal.factor
   tuple_directive:
     - meta_scope: meta.tuple_directive.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.struct.factor
       set: tuple_directive_post_type_name
@@ -113,6 +118,7 @@ contexts:
       scope: invalid.illegal.factor
   tuple_directive_post_type_name:
     - meta_scope: meta.tuple_directive.post_type_name.factor
+    - include: comments
     - match: ({{space_before}}<{{space_after}})
       scope: keyword.control.factor
       set: tuple_directive_superclass
@@ -121,6 +127,7 @@ contexts:
       set: tuple_directive_body
   tuple_directive_superclass:
     - meta_scope: meta.tuple_directive.superclass.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.struct.factor
       set: tuple_directive_body
@@ -128,6 +135,7 @@ contexts:
       scope: invalid.illegal.factor
   tuple_directive_body:
     - meta_scope: meta.tuple_directive.body.factor
+    - include: comments
     - match: ({{semicolon}})
       scope: punctuation.terminator.factor
       pop: true
@@ -137,11 +145,13 @@ contexts:
       scope: invalid.illegal.factor
   generic_directive:
     - meta_scope: meta.generic_directive.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.function.factor
       set: generic_directive_pre_stack_effect
   generic_directive_pre_stack_effect:
     - meta_scope: meta.generic_directive.pre_stack_effect.factor
+    - include: comments
     - match: ({{left_paren}})
       scope: keyword.control.factor
       set: generic_directive_stack_effect
@@ -149,6 +159,7 @@ contexts:
       scope: invalid.illegal.factor
   generic_directive_stack_effect:
     - meta_scope: meta.generic_directive.stack_effect.factor
+    - include: comments
     - match: ({{right_paren}})
       scope: keyword.control.factor
       pop: true
@@ -161,22 +172,26 @@ contexts:
       scope: variable.parameter.factor
   method_directive:
     - meta_scope: meta.method_directive.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.type.factor
       set: method_directive_function_name
   method_directive_function_name:
     - meta_scope: meta.method_directive.function_name.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.function.factor
       set: method_directive_body
   method_directive_body:
     - meta_scope: meta.method_directive.body.factor
+    - include: comments
     - match: ({{semicolon}})
       scope: punctuation.terminator.factor
       pop: true
     - include: expressions
   other_directive:
     - meta_scope: meta.other_directive.factor
+    - include: comments
     - match: ({{eol_or_eof}})
       pop: true
     - match: ({{semicolon}})
@@ -186,15 +201,9 @@ contexts:
     - match: ({{space_before}}(MEMO:|::|:){{space_after}})
       scope: keyword.control.factor
       push: verb_declaration
-    # TODO: how to check that these only apply
-    #       after verb declaration ending ';' ?
-    #       after semicolon, go to post-decl meta
-    #       match on recursive, inline and pop
-    #       when matching non-capturing regex for anything
-    - match: (recursive|inline)
-      scope: storage.modifier.factor
   verb_declaration:
     - meta_scope: meta.verb_declaration.factor
+    - include: comments
     - match: ({{identifier}})
       scope: entity.name.function.factor
       set: pre_stack_effect
@@ -202,6 +211,7 @@ contexts:
       scope: invalid.illegal.factor
   pre_stack_effect:
     - meta_scope: meta.verb_declaration.pre_stack_effect.factor
+    - include: comments
     - match: ({{left_paren}})
       scope: keyword.control.factor
       set: stack_effect
@@ -209,6 +219,7 @@ contexts:
       scope: invalid.illegal.factor
   stack_effect:
     - meta_scope: meta.verb_declaration.stack_effect.factor
+    - include: comments
     - match: ({{right_paren}})
       scope: keyword.control.factor
       set: verb_body
