@@ -236,5 +236,12 @@ contexts:
     - include: comments
     - match: ({{semicolon}})
       scope: punctuation.terminator.factor
-      pop: true
+      set: verb_post_body
     - include: expressions
+  verb_post_body:
+    - meta_scope: meta.verb_declaration.post_body.factor
+    - include: comments
+    - match: ({{space_before}}(inline|foldable|flushable|recursive){{space_after}})
+      scope: storage.modifier.factor
+    - include: declarations
+    - include: directives

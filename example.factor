@@ -14,7 +14,7 @@ M: rectangle area [ width>> ] [ height>> ] bi * ;
     dup 2.34 + / << dup >> zero?
     [| x | V{ 1 2 3 } 2drop P"/path/to/file" ]
     [let forever ] ? call ! end of line comment
-    ; recursive
+    ; inline recursive
 
 MEMO: thing ( x -- y ) dup t [ * ] [ + ] if ;
 
