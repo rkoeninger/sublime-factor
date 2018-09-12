@@ -16,7 +16,6 @@ variables:
 contexts:
   main:
     - include: comments
-    - include: definitions
     - include: directives
   comments:
     - match: ({{space_before}}!{{space_after}})
@@ -26,69 +25,10 @@ contexts:
     - meta_scope: comment.line.factor
     - match: ({{eol_or_eof}})
       pop: true
-  definitions:
-    - match: ({{space_before}}(MEMO:|::|:){{space_after}})
-      scope: keyword.other.definition.factor
-      push: definition
-  definition:
-    - meta_scope: meta.function.factor
-    - include: comments
-    - match: ({{identifier}})
-      scope: entity.name.function.factor
-      set: definition_name_after
-    - match: ({{debris}})
-      scope: invalid.illegal.factor
-  definition_name_after:
-    - include: comments
-    - match: ({{left_paren}})
-      scope: punctuation.section.braces.begin.factor
-      set: definition_stackeffect
-    - match: ({{debris}})
-      scope: invalid.illegal.factor
-  definition_stackeffect:
-    - meta_scope: meta.function.parameters.factor
-    - include: comments
-    - match: ({{right_paren}})
-      scope: punctuation.section.braces.end.factor
-      set: definition_body
-    - match: ({{left_paren}})
-      scope: punctuation.section.braces.begin.factor
-      push: definition_stackeffect_nested
-    - match: ({{double_dash}})
-      scope: punctuation.separator.factor
-    - match: ({{identifier}})
-      scope: variable.parameter.factor
-  definition_stackeffect_nested:
-    - include: comments
-    - match: ({{right_paren}})
-      scope: punctuation.section.braces.end.factor
-      pop: true
-    - match: ({{left_paren}})
-      scope: punctuation.section.braces.begin.factor
-      push: definition_stackeffect_nested
-    - match: ({{double_dash}})
-      scope: punctuation.separator.factor
-    - match: ({{identifier}})
-      scope: variable.parameter.factor
-  definition_body:
-    - meta_scope: meta.function.body.factor
-    - include: comments
-    - match: ({{semicolon}})
-      scope: punctuation.terminator.factor
-      set: definition_body_after
-    - include: expressions
-  definition_body_after:
-    - include: comments
-    - match: ({{space_before}}(inline|foldable|flushable|recursive){{space_after}})
-      scope: storage.modifier.factor
-    # TODO: including top-level contexts here allows
-    #       highlighting of post-definition modifiers
-    #       to work, but it also causes
-    #       and the parser to recur indefinitely
-    #       could be a problem with big files
-    - include: definitions
-    - include: directives
   directives:
+    - match: ({{space_before}}(MEMO:|::|:){{space_after}})
+      scope: keyword.other.directive.factor
+      push: directive_define
     - match: ({{space_before}}USE:{{space_after}})
       scope: keyword.other.directive.factor
       push: directive_use
@@ -113,6 +53,63 @@ contexts:
     - match: ({{space_before}}[A-Z]\S*:{{space_after}})
       scope: keyword.other.directive.factor
       push: directive_other
+  directive_define:
+    - meta_scope: meta.function.factor
+    - include: comments
+    - match: ({{identifier}})
+      scope: entity.name.function.factor
+      set: directive_define_name_after
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  directive_define_name_after:
+    - include: comments
+    - match: ({{left_paren}})
+      scope: punctuation.section.braces.begin.factor
+      set: directive_define_stackeffect
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  directive_define_stackeffect:
+    - meta_scope: meta.function.parameters.factor
+    - include: comments
+    - match: ({{right_paren}})
+      scope: punctuation.section.braces.end.factor
+      set: directive_define_body
+    - match: ({{left_paren}})
+      scope: punctuation.section.braces.begin.factor
+      push: directive_define_stackeffect_nested
+    - match: ({{double_dash}})
+      scope: punctuation.separator.factor
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+  directive_define_stackeffect_nested:
+    - include: comments
+    - match: ({{right_paren}})
+      scope: punctuation.section.braces.end.factor
+      pop: true
+    - match: ({{left_paren}})
+      scope: punctuation.section.braces.begin.factor
+      push: directive_define_stackeffect_nested
+    - match: ({{double_dash}})
+      scope: punctuation.separator.factor
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+  directive_define_body:
+    - meta_scope: meta.function.body.factor
+    - include: comments
+    - match: ({{semicolon}})
+      scope: punctuation.terminator.factor
+      set: directive_define_body_after
+    - include: expressions
+  directive_define_body_after:
+    - include: comments
+    - match: ({{space_before}}(inline|foldable|flushable|recursive){{space_after}})
+      scope: storage.modifier.factor
+    # TODO: including top-level contexts here allows
+    #       highlighting of post-definition modifiers
+    #       to work, but it also causes
+    #       and the parser to recur indefinitely
+    #       could be a problem with big files
+    - include: directives
   directive_use:
     - meta_scope: meta.directive.use.factor
     - include: comments
