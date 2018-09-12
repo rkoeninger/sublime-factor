@@ -237,6 +237,7 @@ contexts:
     - match: ({{semicolon}})
       scope: punctuation.terminator.factor
       pop: true
+    - include: expression_atoms
   expressions:
     - match: ({{space_before}}(P|SBUF|DLL|URL)?")
       scope: punctuation.definition.string.begin.factor
@@ -255,6 +256,8 @@ contexts:
       push: expression_parse_time
     - match: ({{space_before}}\|{{space_after}})
       scope: punctuation.separator.factor
+    - include: expression_atoms
+  expression_atoms:
     - match: ({{space_before}}[^a-zA-Z0-9;\s]+{{space_after}})
       scope: keyword.operator.factor
     - match: ({{space_before}}(t|f){{space_after}})
@@ -264,28 +267,28 @@ contexts:
     - match: ({{identifier}})
       scope: variable.function.factor
   expression_brackets:
-    - meta_scope: meta.brackets
+    - meta_scope: meta.brackets.factor
     - include: comments
     - match: ({{space_before}}\]{{space_after}})
       scope: punctuation.section.brackets.end.factor
       pop: true
     - include: expressions
   expression_braces:
-    - meta_scope: meta.braces
+    - meta_scope: meta.braces.factor
     - include: comments
     - match: ({{space_before}}\}{{space_after}})
       scope: punctuation.section.braces.end.factor
       pop: true
     - include: expressions
   expression_parens:
-    - meta_scope: meta.parens
+    - meta_scope: meta.parens.factor
     - include: comments
     - match: ({{space_before}}\){{space_after}})
       scope: punctuation.section.parens.end.factor
       pop: true
     - include: expressions
   expression_parse_time:
-    - meta_scope: meta.preprocessor
+    - meta_scope: meta.preprocessor.factor
     - include: comments
     - match: ({{space_before}}>>{{space_after}})
       scope: punctuation.section.block.end.factor
