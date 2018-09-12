@@ -26,6 +26,8 @@ contexts:
     - match: ({{eol_or_eof}})
       pop: true
   directives:
+    - match: ({{space_before}}(<PRIVATE|PRIVATE>){{space_after}})
+      scope: storage.modifier.factor
     - match: ({{space_before}}(MEMO:|::|:){{space_after}})
       scope: keyword.other.directive.factor
       push: directive_define
@@ -109,6 +111,8 @@ contexts:
     #       to work, but it also causes
     #       and the parser to recur indefinitely
     #       could be a problem with big files
+    #       it also prevents properly closing
+    #       <PRIVATE PRIVATE> meta contexts
     - include: directives
   directive_use:
     - meta_scope: meta.directive.use.factor
