@@ -234,25 +234,59 @@ contexts:
       scope: punctuation.terminator.factor
       pop: true
   expressions:
-    - match: ({{space_before}}(|P|SBUF|DLL|URL)")
+    - match: ({{space_before}}(P|SBUF|DLL|URL)?")
       scope: punctuation.definition.string.begin.factor
       push: expression_string
-    # TODO: words like [ ] are not scoped the same, they should be the same
-    #       and we could also label matching braces with
-    #       punctuation.section.braces.begin|end
-    #       punctuation.section.block.being|end
-    #       meta.braces
-    #       , etc.
-    - match: ({{space_before}}(\S*(\[|\(|\{)\S*|\]|\)|\}){{space_after}})
-      scope: keyword.control.factor
-    - match: ({{space_before}}[^a-zA-Z0-9;]+{{space_after}})
+    - match: ({{space_before}}\S*\[\S*{{space_after}})
+      scope: punctuation.section.brackets.begin.factor
+      push: expression_brackets
+    - match: ({{space_before}}\S*\{\S*{{space_after}})
+      scope: punctuation.section.braces.begin.factor
+      push: expression_braces
+    - match: ({{space_before}}\S*\(\S*{{space_after}})
+      scope: punctuation.section.parens.begin.factor
+      push: expression_parens
+    - match: ({{space_before}}<<{{space_after}})
+      scope: punctuation.section.block.begin.factor
+      push: expression_parse_time
+    - match: ({{space_before}}\|{{space_after}})
+      scope: punctuation.separator.factor
+    - match: ({{space_before}}[^a-zA-Z0-9;\s]+{{space_after}})
       scope: keyword.operator.factor
     - match: ({{space_before}}(t|f){{space_after}})
-      scope: constant.language.factor
-    - match: ({{space_before}}[+-]?\d+(\.\d+)?{{space_after}})
+      scope: constant.language.boolean.factor
+    - match: ({{space_before}}[+-]?\d+(\.\d+|\/\d+)?([eE][+-]?\d+)?{{space_after}})
       scope: constant.numeric.factor
     - match: ({{identifier}})
       scope: variable.function.factor
+  expression_brackets:
+    - meta_scope: meta.brackets
+    - include: comments
+    - match: ({{space_before}}\]{{space_after}})
+      scope: punctuation.section.brackets.end.factor
+      pop: true
+    - include: expressions
+  expression_braces:
+    - meta_scope: meta.braces
+    - include: comments
+    - match: ({{space_before}}\}{{space_after}})
+      scope: punctuation.section.braces.end.factor
+      pop: true
+    - include: expressions
+  expression_parens:
+    - meta_scope: meta.parens
+    - include: comments
+    - match: ({{space_before}}\){{space_after}})
+      scope: punctuation.section.parens.end.factor
+      pop: true
+    - include: expressions
+  expression_parse_time:
+    - meta_scope: meta.preprocessor
+    - include: comments
+    - match: ({{space_before}}>>{{space_after}})
+      scope: punctuation.section.block.end.factor
+      pop: true
+    - include: expressions
   expression_string:
     - meta_scope: string.quoted.double.factor
     - match: (\\(\\|s|t|n|r|b|v|f|0|e|"|\d{3}|u\d{6}|u{\w+}))
