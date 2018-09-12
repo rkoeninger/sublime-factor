@@ -28,7 +28,7 @@ contexts:
       pop: true
   definitions:
     - match: ({{space_before}}(MEMO:|::|:){{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.definition.factor
       push: definition
   definition:
     - meta_scope: meta.function.factor
@@ -41,7 +41,7 @@ contexts:
   definition_name_after:
     - include: comments
     - match: ({{left_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.begin.factor
       set: definition_stackeffect
     - match: ({{debris}})
       scope: invalid.illegal.factor
@@ -49,10 +49,10 @@ contexts:
     - meta_scope: meta.function.parameters.factor
     - include: comments
     - match: ({{right_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.end.factor
       set: definition_body
     - match: ({{left_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.begin.factor
       push: definition_stackeffect_nested
     - match: ({{double_dash}})
       scope: punctuation.separator.factor
@@ -61,10 +61,10 @@ contexts:
   definition_stackeffect_nested:
     - include: comments
     - match: ({{right_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.end.factor
       pop: true
     - match: ({{left_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.begin.factor
       push: definition_stackeffect_nested
     - match: ({{double_dash}})
       scope: punctuation.separator.factor
@@ -90,28 +90,28 @@ contexts:
     - include: directives
   directives:
     - match: ({{space_before}}USE:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_use
     - match: ({{space_before}}USING:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_using
     - match: ({{space_before}}MAIN:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_main
     - match: ({{space_before}}IN:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_in
     - match: ({{space_before}}TUPLE:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_tuple
     - match: ({{space_before}}GENERIC:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_generic
     - match: ({{space_before}}M:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_method
     - match: ({{space_before}}[A-Z]\S*:{{space_after}})
-      scope: keyword.control.factor
+      scope: keyword.other.directive.factor
       push: directive_other
   directive_use:
     - meta_scope: meta.directive.use.factor
@@ -192,7 +192,7 @@ contexts:
     - meta_scope: meta.directive.generic.name.after.factor
     - include: comments
     - match: ({{left_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.begin.factor
       set: directive_generic_stackeffect
     - match: ({{debris}})
       scope: invalid.illegal.factor
@@ -200,10 +200,10 @@ contexts:
     - meta_scope: meta.directive.generic.stackeffect.factor
     - include: comments
     - match: ({{right_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.end.factor
       pop: true
     - match: ({{left_paren}})
-      scope: keyword.control.factor
+      scope: punctuation.section.braces.begin.factor
       push: directive_generic_stackeffect
     - match: ({{double_dash}})
       scope: punctuation.separator.factor
