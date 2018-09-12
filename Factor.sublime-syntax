@@ -44,9 +44,11 @@ contexts:
       scope: constant.character.escape.factor
     - match: (\\.)
       scope: invalid.illegal.factor
-    - match: (")
+    - match: ("{{space_after}})
       scope: punctuation.definition.string.end.factor
       pop: true
+    - match: (")
+      scope: invalid.illegal
   directives:
     - match: ({{space_before}}USE:{{space_after}})
       scope: keyword.control.factor
