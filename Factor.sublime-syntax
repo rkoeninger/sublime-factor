@@ -51,13 +51,21 @@ contexts:
     - match: ({{right_paren}})
       scope: keyword.control.factor
       set: definition_body
-      # TODO: above needs to pop instead of
-      #       set to do nested stack effects
-      #       might result in more
-      #       duplicated context
     - match: ({{left_paren}})
       scope: keyword.control.factor
-      push: definition_stackeffect
+      push: definition_stackeffect_nested
+    - match: ({{double_dash}})
+      scope: punctuation.separator.factor
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+  definition_stackeffect_nested:
+    - include: comments
+    - match: ({{right_paren}})
+      scope: keyword.control.factor
+      pop: true
+    - match: ({{left_paren}})
+      scope: keyword.control.factor
+      push: definition_stackeffect_nested
     - match: ({{double_dash}})
       scope: punctuation.separator.factor
     - match: ({{identifier}})

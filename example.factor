@@ -10,7 +10,7 @@ GENERIC: area ( shape -- area )
 M: circle area radius>> sq pi * ;
 M: rectangle area [ width>> ] [ height>> ] bi * ;
 
-:: forever ( x -- ? )
+:: forever ( x: ( a... -- b... ) -- ? )
     dup 2.34 + / << dup >> zero?
     [| x | V{ 1 2 3 } 2drop P"/path/to/file" ]
     [let forever ] ? call ! end of line comment
