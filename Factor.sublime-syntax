@@ -76,10 +76,9 @@ contexts:
       push: other_directive
   use_directive:
     - meta_scope: meta.use_directive.factor
-    - match: ({{eol_or_eof}})
-      pop: true
-    - match: ((?<=(USE:\s)){{identifier}})
+    - match: ({{identifier}})
       scope: entity.name.namespace.factor
+      pop: true
     - match: ({{debris}})
       scope: invalid.illegal.factor
   using_directive:
@@ -93,41 +92,45 @@ contexts:
       scope: invalid.illegal.factor
   main_directive:
     - meta_scope: meta.main_directive.factor
-    - match: ({{eol_or_eof}})
-      pop: true
-    - match: ((?<=(MAIN:\s)){{identifier}})
+    - match: ({{identifier}})
       scope: entity.name.function.factor
+      pop: true
     - match: ({{debris}})
       scope: invalid.illegal.factor
   in_directive:
     - meta_scope: meta.in_directive.factor
-    - match: ({{eol_or_eof}})
+    - match: ({{identifier}})
+      scope: entity.name.namespace.factor
       pop: true
-    - match: ((?<=(IN:\s)){{identifier}})
-      scope: entity.name.section.factor
     - match: ({{debris}})
       scope: invalid.illegal.factor
   tuple_directive:
     - meta_scope: meta.tuple_directive.factor
-    - match: ({{semicolon}})
-      scope: punctuation.terminator.factor
-      pop: true
-    - match: (<)
-      scope: keyword.control.factor
-      set: tuple_directive_superclass
-    - match: ((?<=(TUPLE:\s)){{identifier}})
+    - match: ({{identifier}})
       scope: entity.name.struct.factor
-    - match: ({{space_before}}{{debris}})
-      scope: variable.parameter.factor
+      set: tuple_directive_post_type_name
     - match: ({{debris}})
       scope: invalid.illegal.factor
+  tuple_directive_post_type_name:
+    - meta_scope: meta.tuple_directive.post_type_name.factor
+    - match: ({{space_before}}<{{space_after}})
+      scope: keyword.control.factor
+      set: tuple_directive_superclass
+    - match: ({{identifier}})
+      scope: variable.parameter.factor
+      set: tuple_directive_body
   tuple_directive_superclass:
     - meta_scope: meta.tuple_directive.superclass.factor
+    - match: ({{identifier}})
+      scope: entity.name.struct.factor
+      set: tuple_directive_body
+    - match: ({{debris}})
+      scope: invalid.illegal.factor
+  tuple_directive_body:
+    - meta_scope: meta.tuple_directive.body.factor
     - match: ({{semicolon}})
       scope: punctuation.terminator.factor
       pop: true
-    - match: ((?<=(<\s)){{identifier}})
-      scope: entity.name.struct.factor
     - match: ({{identifier}})
       scope: variable.parameter.factor
     - match: ({{debris}})

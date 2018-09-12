@@ -1,6 +1,5 @@
 ! single line comment
-USE: singlegood
-USE: mulitiple bad
+USE: sequences
 USING: present locals ;
 IN: here
 
