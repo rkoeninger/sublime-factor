@@ -239,9 +239,6 @@ contexts:
       pop: true
     - include: expression_atoms
   expressions:
-    - match: ({{space_before}}(P|SBUF|DLL|URL)?")
-      scope: punctuation.definition.string.begin.factor
-      push: expression_string
     - match: ({{space_before}}\S*\[\S*{{space_after}})
       scope: punctuation.section.brackets.begin.factor
       push: expression_brackets
@@ -258,12 +255,15 @@ contexts:
       scope: punctuation.separator.factor
     - include: expression_atoms
   expression_atoms:
-    - match: ({{space_before}}[^a-zA-Z0-9;\s]+{{space_after}})
-      scope: keyword.operator.factor
+    - match: ({{space_before}}(P|SBUF|DLL|URL)?")
+      scope: punctuation.definition.string.begin.factor
+      push: expression_string
     - match: ({{space_before}}(t|f){{space_after}})
       scope: constant.language.boolean.factor
     - match: ({{space_before}}[+-]?\d+(\.\d+|\/\d+)?([eE][+-]?\d+)?{{space_after}})
       scope: constant.numeric.factor
+    - match: ({{space_before}}[^a-zA-Z0-9;\s\[\]\(\)\{\}]+{{space_after}})
+      scope: keyword.operator.factor
     - match: ({{identifier}})
       scope: variable.function.factor
   expression_brackets:
