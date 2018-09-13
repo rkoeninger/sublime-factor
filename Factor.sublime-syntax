@@ -17,6 +17,7 @@ contexts:
   main:
     - include: comments
     - include: directives
+    - include: expressions
   comments:
     - match: ({{space_before}}!{{space_after}})
       scope: punctuation.definition.comment.factor
@@ -114,6 +115,7 @@ contexts:
     #       it also prevents properly closing
     #       <PRIVATE PRIVATE> meta contexts
     - include: directives
+    - include: expressions
   directive_use:
     - meta_scope: meta.directive.use.factor
     - include: comments
