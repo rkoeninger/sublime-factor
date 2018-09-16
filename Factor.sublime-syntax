@@ -107,13 +107,13 @@ contexts:
     - include: comments
     - match: ({{space_before}}(inline|foldable|flushable|recursive){{space_after}})
       scope: storage.modifier.factor
-    # TODO: including top-level contexts here allows
-    #       highlighting of post-definition modifiers
-    #       to work, but it also causes
-    #       and the parser to recur indefinitely
+    # TODO: including top-level contexts here instead of popping
+    #       allows highlighting of post-definition modifiers like the above
+    #       but it causes the parser to recur indefinitely
+    #       and it could also cause function.body.after scopes
+    #       to nest over the course of the file
     #       could be a problem with big files
-    #       it also prevents properly closing
-    #       <PRIVATE PRIVATE> meta contexts
+    #       it also prevents properly closing <PRIVATE PRIVATE> meta contexts
     - include: directives
     - include: expressions
   directive_use:
@@ -241,13 +241,13 @@ contexts:
       pop: true
     - include: expression_atoms
   expressions:
-    - match: ({{space_before}}\S*\[\S*{{space_after}})
+    - match: ({{space_before}}[^\]\(\)\{\}\s]*\[[^\]\(\)\{\}\s]*{{space_after}})
       scope: punctuation.section.brackets.begin.factor
       push: expression_brackets
-    - match: ({{space_before}}\S*\{\S*{{space_after}})
+    - match: ({{space_before}}[^\[\]\(\)\}\s]*\{[^\[\]\(\)\}\s]*{{space_after}})
       scope: punctuation.section.braces.begin.factor
       push: expression_braces
-    - match: ({{space_before}}\S*\(\S*{{space_after}})
+    - match: ({{space_before}}[^\[\]\)\{\}\s]*\([^\[\]\)\{\}\s]*{{space_after}})
       scope: punctuation.section.parens.begin.factor
       push: expression_parens
     - match: ({{space_before}}<<{{space_after}})

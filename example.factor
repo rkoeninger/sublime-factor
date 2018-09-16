@@ -11,7 +11,7 @@ M: circle area radius>> sq pi * ;
 M: rectangle area [ width>> ] [ height>> ] bi * ;
 
 :: forever ( x quot1: ( x -- y ) quot2: ( x y -- r ) -- res )
-    dup 2.34 + / << dup >> zero? 12/4
+    dup 2.34 + / << dup >> zero? 12/4 [a,b)
     [| x | V{ 1 2 3 } 2drop P"/path/to/file" ]
     [let forever ] if ? call ! end of line comment
     ; inline recursive
