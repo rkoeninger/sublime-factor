@@ -50,7 +50,7 @@ contexts:
     - match: ({{space_before}}GENERIC:{{space_after}})
       scope: keyword.other.directive.factor
       push: directive_generic
-    - match: ({{space_before}}M:{{space_after}})
+    - match: ({{space_before}}(M:|M::){{space_after}})
       scope: keyword.other.directive.factor
       push: directive_method
     - match: ({{space_before}}[A-Z]\S*:{{space_after}})
