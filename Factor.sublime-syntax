@@ -29,7 +29,7 @@ contexts:
   directives:
     - match: ({{space_before}}(<PRIVATE|PRIVATE>){{space_after}})
       scope: storage.modifier.factor
-    - match: ({{space_before}}(MEMO:|::|:){{space_after}})
+    - match: ({{space_before}}(TYPED:|TYPED::|MEMO:|::|:){{space_after}})
       scope: keyword.other.directive.factor
       push: directive_define
     - match: ({{space_before}}USE:{{space_after}})
